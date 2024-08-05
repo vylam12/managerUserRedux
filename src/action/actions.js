@@ -4,7 +4,7 @@ import { INCREMENT, DECREMENT } from './types';
 
 export const increaseCounter = () => {
     return {
-        type: INCREMENT,
+        type: INCREMENT, //name dùng để định danh actions tên là gì        
         payload: { like: 'Hello', name: 'Lam' }
     };
 };
