@@ -1,0 +1,123 @@
+.table-striped {
+    tbody {
+        tr {
+            font-size: 14px;
+            font-family: sans-serif;
+
+            &:nth-of-type(2n+1) {
+                background-color: #e9e9e9;
+            }
+
+            // tắt tô trên column sort
+            td.ant-table-column-sort {
+                background-color: transparent;
+            }
+
+            .profile-user-table {
+                display: flex;
+                align-self: 'center';
+
+                .profile-name-table {
+                    padding-top: 5px;
+                }
+
+                .profile-img-table {
+                    margin-right: 15px;
+                    // height: 34px;
+                    // width: 34px;
+                    height: 34px;
+                    width: 34px;
+                    @include rounded(50%);
+
+                    img {
+                        height: 100px;
+                        width: 100px;
+                        width: 100%;
+                        height: 100%;
+                        @include rounded(50%);
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.dropdown {
+    height: 38px;
+
+    .btn-rounded {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+
+    .action-icon {
+        color: $black;
+        font-size: 18px;
+        display: inline-block;
+    }
+
+    .dropdown-toggle {
+        &::after {
+            display: none;
+        }
+    }
+
+
+    .dropdown-menu-right {
+        a {
+            font-size: 14px;
+        }
+    }
+
+    .dropdown-menu {
+        max-height: 150px;
+        min-width: 120px;
+        overflow-y: auto;
+
+        .dropdown-item {
+            color: $black;
+            padding: 5px 15px;
+        }
+    }
+
+    .dropdown-toggle {
+        background-color: rgba(255, 255, 255, 0.1);
+        height: 40px;
+        @include rounded(5px);
+        @include margin-padding(0 25px 0 10px, null);
+        width: auto;
+        position: relative;
+
+    }
+
+    .nav-link {
+        width: 40px;
+        height: 40px;
+        @include rounded(5px);
+        @include margin-padding(0 5px, null);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    a {
+        color: $secondary;
+
+        &.dropdown-toggle {
+            &::after {
+                margin-left: 8px;
+                display: none;
+            }
+        }
+    }
+}
+
+.profile-action {
+    text-align: right;
+    // @include position(absolute, 10px, 5px, null, null);
+    @include fix-bottom;
+}

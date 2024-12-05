@@ -1,10 +1,14 @@
-import { INCREMENT, DECREMENT } from './types';
-// muốn nói cho redux phải làm một cái gì đó từ phía client thì phải khai báo 1 biến là action
-// action (là 1 biến, 1 object của JVS) chính là việc có thể thông báo đến redux nó cần phải làm gì
+import axios from 'axios';
+import {
+    INCREMENT, DECREMENT,
+    FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_ERROR,
+    CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_ERROR,
+    DELETE_USER_SUCCESS
+} from './types';
 
 export const increaseCounter = () => {
     return {
-        type: INCREMENT, //name dùng để định danh actions tên là gì        
+        type: INCREMENT,
         payload: { like: 'Hello', name: 'Lam' }
     };
 };
@@ -14,3 +18,98 @@ export const decreaseCounter = () => {
         type: DECREMENT,
     };
 };
+//start, doing, finish
+export const fetchAllUser = () => {
+
+    return async (dispatch, getState) => {
+        dispatch(fetchUsersRequest());
+        try {
+            const res = await axios.get("http://localhost:8080/users/all");
+            const data = res && res.data ? res.data : [];
+            dispatch(fetchUsersSuccess(data));
+        } catch (error) {
+            console.log(error);
+            dispatch(fetchUsersError());
+        }
+    }
+}
+
+export const fetchUsersRequest = () => {
+    return {
+        type: FETCH_USER_REQUEST
+    }
+}
+
+export const fetchUsersSuccess = (data) => {
+    return {
+        type: FETCH_USER_SUCCESS,
+        dataUser: data
+    }
+}
+
+export const fetchUsersError = () => {
+    return {
+        type: FETCH_USER_ERROR
+    }
+}
+
+export const createNewUser = (email, password, username) => {
+
+    return async (dispatch, getState) => {
+        dispatch(createUsersRequest());
+        try {
+            let res = await axios.post("http://localhost:8080/users/create", { email, password, username });
+            if (res) {
+                dispatch(createhUsersSuccess());
+                dispatch(fetchAllUser());
+            }
+
+        } catch (error) {
+            console.log(error);
+            dispatch(createUsersError());
+        }
+    }
+}
+
+export const createUsersRequest = () => {
+    return {
+        type: CREATE_USER_REQUEST
+    }
+}
+
+export const createhUsersSuccess = () => {
+    return {
+        type: CREATE_USER_SUCCESS,
+    }
+}
+
+export const createUsersError = () => {
+    return {
+        type: CREATE_USER_ERROR
+    }
+}
+
+
+export const deleteUser = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await axios.post(`http://localhost:8080/users/delete/${id}`);
+            console.log("res", res)
+            if (res && res.data.errCode === 0) {
+                dispatch(deleteUsersSuccess());
+                dispatch(fetchAllUser());
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export const deleteUsersSuccess = () => {
+    return {
+        type: DELETE_USER_SUCCESS,
+    }
+}
+
