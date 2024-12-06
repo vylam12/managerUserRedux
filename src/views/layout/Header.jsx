@@ -11,7 +11,7 @@ const AppHeader = (props) => {
     const [collapsed, setCollapsed] = useContext(AdminContext);
     //thông tin xác thực
     const Creadencial = localStorage.getItem("credencial");
-    console.log("check creadencial", Creadencial);
+    // console.log("check creadencial", Creadencial);
     const Value = JSON.parse(Creadencial);
     const UserName = Value?.email?.split("@")[0];
     const ProfileName = UserName?.charAt(0).toUpperCase() + UserName?.slice(1);

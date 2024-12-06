@@ -1,6 +1,7 @@
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { LuPencil } from "react-icons/lu";
 import { IoTrashBin } from "react-icons/io5";
+import Button from 'react-bootstrap/Button';
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,31 +10,41 @@ import { Link } from "react-router-dom";
 
 import { fetchAllUser } from "../../../action/actions"
 import AddPopupEmployee from "../../../components/employees/AddPopupEmployee";
+import DeletePopupEmployee from "../../../components/employees/DeletePopupEmployee";
+import EditPopupEmployee from "../../../components/employees/EditPopupEmployee";
 const EmployeeList = () => {
     const dispatch = useDispatch();
+    const isError = useSelector((state) => state.user.isError);
+    const isLoading = useSelector((state) => state.user.isLoading);
     const empInfo = useSelector((state) => state.user.listUsers);
     useEffect(() => {
         dispatch(fetchAllUser());
     }, [])
 
-    // const [empInfo, setEmpInfo] = useState([]);
-    const [loading, setLoading] = useState(false);
+
     const [showModal, setShowModal] = useState(false);
+    const [showModalEdit, setShowModalEdit] = useState(false);
     const [showModalDelete, setShowModalDelete] = useState(false);
     const [selectedEmployeeId, setSelectedEmployeeId] = useState(0);
     const [filteredInfo, setFilteredInfo] = useState({});
     const [sortedInfo, setSortedInfo] = useState({});
-    const [statusList, setStatusList] = useState([])
 
-    const handleShow = (id) => {
-        setSelectedEmployeeId(id);
+    const handleShow = () => {
         setShowModal(true);
-        console.log("id emp grid:", id);
     };
     const handleClose = () => setShowModal(false);
-
-    const handleShowDelete = () => setShowModalDelete(true);
+    const handleShowEdit = (id) => {
+        setSelectedEmployeeId(id);
+        setShowModalEdit(true);
+    };
+    const handleCloseEdit = () => setShowModalEdit(false);
+    const handleShowDelete = (id) => {
+        setSelectedEmployeeId(id);
+        setShowModalDelete(true);
+    };
     const handleCloseDelete = () => setShowModalDelete(false);
+
+
     const handleChange = (pagination, filters, sorter) => {
         console.log('Various parameters', pagination, filters, sorter);
         setFilteredInfo(filters);
@@ -92,14 +103,14 @@ const EmployeeList = () => {
                         <Link
                             className="dropdown-item"
                             to="#"
-                            onClick={() => handleShow(record.id)}
+                            onClick={() => handleShowEdit(record.id)}
                         >
                             <LuPencil style={{ marginRight: "5px" }} /> Edit
                         </Link>
                         <Link
                             className="dropdown-item"
                             to="#"
-                            onClick={handleShowDelete}
+                            onClick={() => handleShowDelete(record.id)}
                         >
                             <IoTrashBin style={{ marginRight: "5px" }} /> Delete
                         </Link>
@@ -114,17 +125,24 @@ const EmployeeList = () => {
     return (
         <>
             <h3>Employee list</h3>
-            <AddPopupEmployee />
+            <Button className='btn-emp-add' onClick={handleShow}>
+                Add Employee
+            </Button>
+            <AddPopupEmployee show={showModal} handleClose={handleClose} />
+
             <Table
                 className="table-striped"
                 columns={columns}
-                dataSource={empInfo}
+                dataSource={isLoading ? [] : empInfo}
+                loading={isLoading}
+
                 style={{ overflowX: "auto" }}
                 onChange={handleChange}
                 pagination={{ pageSize: 6 }}
-                loading={loading}
                 rowKey={(record) => record.id}
             />
+            <EditPopupEmployee show={showModalEdit} handleClose={handleCloseEdit} id={selectedEmployeeId} />
+            <DeletePopupEmployee show={showModalDelete} handleClose={handleCloseDelete} id={selectedEmployeeId} />
         </>
     )
 }

@@ -20,11 +20,6 @@ const AppContainer = () => {
             path: "employee-list",
             element: <EmployeeList />
         },
-        // {
-        //     id: 2,
-        //     path: "client-list",
-        //     element: <ClientList />
-        // },
 
     ]
 
@@ -39,7 +34,7 @@ const AppContainer = () => {
                             <Content
                                 style={{
                                     padding: 24,
-                                    minHeight: '100hv',
+                                    minHeight: '100vh',
                                     background: colorBgContainer,
                                     borderRadius: borderRadiusLG,
                                     height: '100vh',

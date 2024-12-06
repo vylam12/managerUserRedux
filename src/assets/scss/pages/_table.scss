@@ -46,6 +46,7 @@
 .dropdown {
     height: 38px;
 
+
     .btn-rounded {
         display: inline-flex;
         align-items: center;
@@ -75,7 +76,7 @@
     .dropdown-menu {
         max-height: 150px;
         min-width: 120px;
-        overflow-y: auto;
+
 
         .dropdown-item {
             color: $black;

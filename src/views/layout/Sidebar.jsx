@@ -28,7 +28,7 @@ const AppSidebar = () => {
 
     const adminMenu = [
         {
-            key: '2',
+            key: '1',
             icon: <UserOutlined />,
             label:
                 <div className="nav-text-sidebar">
@@ -38,38 +38,31 @@ const AppSidebar = () => {
                 </div>
 
         },
-        {
-            key: '3',
-            icon: <FaUsers />,
-            label:
-                <div className="nav-text-sidebar">
-                    <Link to="/client-list">
-                        Clients
-                    </Link>
-                </div>
-        },
+
     ]
     const commonItems = [
+        // {
+        //     key: '1',
+        //     icon: <LuLayoutDashboard />,
+        //     label:
+        //         <div className="nav-text-sidebar">
+        //             <Link to={userType === "admin" ? "/admin-dashboard" : "/user-dashboard"}>
+        //                 Dashboard
+        //             </Link>
+        //         </div>
+        // },
         {
             key: '1',
-            icon: <LuLayoutDashboard />,
+            icon: <UserOutlined />,
             label:
                 <div className="nav-text-sidebar">
-                    <Link to={userType === "admin" ? "/admin-dashboard" : "/user-dashboard"}>
-                        Dashboard
+                    <Link to="/employee-list" >
+                        List Employee
                     </Link>
                 </div>
+
         },
-        {
-            key: '4',
-            icon: <MdOutlineDevices />,
-            label:
-                <div className="nav-text-sidebar">
-                    <Link to="/device">
-                        Device
-                    </Link>
-                </div>
-        }
+
     ]
     const menuItems = userType === "admin"
         ? [...commonItems, ...adminMenu]

@@ -1,9 +1,13 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-
-const DeletePopupEmployee = (
-    { show, handleClose }
-) => {
+import { deleteUser } from "../../action/actions"
+import { useDispatch, useSelector } from 'react-redux';
+const DeletePopupEmployee = ({ show, handleClose, id }) => {
+    const dispatch = useDispatch();
+    const hanleDeleteMap = () => {
+        dispatch(deleteUser(id));
+        handleClose();
+    }
     return (
         <>
             <div className="custom-dialog">
@@ -18,7 +22,7 @@ const DeletePopupEmployee = (
                         <Button onClick={handleClose}>
                             Cancel
                         </Button>
-                        <Button onClick={handleClose}>
+                        <Button onClick={hanleDeleteMap}>
                             Delete
                         </Button>
                     </Modal.Footer>
